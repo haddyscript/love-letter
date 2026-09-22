@@ -45,11 +45,28 @@
   line-height: 1.75;
 }
 
+.final__closing-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.final__closing-glow {
+  position: absolute;
+  inset: -40% -20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 129, 0.3) 0%, rgba(255, 107, 129, 0) 70%);
+  filter: blur(4px);
+  z-index: -1;
+}
+
 .final__closing {
   font-family: var(--font-script);
   font-size: clamp(2rem, 8vw, 2.8rem);
   color: var(--color-accent);
-  margin-top: 0.5rem;
+  margin: 0;
 }
 
 .final__signature {

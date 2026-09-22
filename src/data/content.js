@@ -86,7 +86,7 @@ export const loveMoment = {
 export const finalMessage = {
   countdown: ["59 months down...", "1 month until 5 years. ❤️"],
   heading: "Happy 59th Monthsary, Love.",
-  body: "Thank you for growing with me, laughing with me, putting up with me 😂, and choosing me for almost 5 years.",
+  body: "Thank you for growing with me, laughing with me, putting up with me, and choosing me for almost 5 years.",
   closing: "I love you.",
   signature: "— Hadrian ❤️",
 };
