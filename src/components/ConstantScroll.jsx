@@ -4,8 +4,8 @@ import { useReducedMotion } from "framer-motion";
 // A hard, fast swipe and a light, gentle one both settle into this same
 // cruise speed, so pace stays calm and unhurried regardless of effort —
 // but still comfortable to actually scroll with, not sluggish.
-const CRUISE_SPEED = 850; // px/second
-const ACCEL = 4.5; // how quickly velocity eases toward the cruise speed
+const CRUISE_SPEED = 1300; // px/second
+const ACCEL = 5.5; // how quickly velocity eases toward the cruise speed
 const IDLE_RESET_MS = 140; // gesture is considered "released" after this gap
 
 export default function ConstantScroll({ locked }) {
@@ -21,6 +21,17 @@ export default function ConstantScroll({ locked }) {
     let rafId;
     let lastTime = performance.now();
 
+    // Recomputing scrollHeight every frame forces a synchronous layout
+    // reflow each time — with this many images on the page, that's a real
+    // source of jank at higher speeds. Cache it and only recompute on
+    // resize / gesture start instead of every animation frame.
+    let cachedMaxScroll = 0;
+    const updateMaxScroll = () => {
+      cachedMaxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    updateMaxScroll();
+    window.addEventListener("resize", updateMaxScroll);
+
     const setDirection = (dir) => {
       direction = dir;
       clearTimeout(idleTimer);
@@ -35,6 +46,7 @@ export default function ConstantScroll({ locked }) {
       // SmoothScroll) so it shouldn't react to touch at all, but stopping
       // propagation here means its listener never even sees the gesture.
       e.stopPropagation();
+      updateMaxScroll();
       touchLastY = e.touches[0].clientY;
     };
 
@@ -68,8 +80,7 @@ export default function ConstantScroll({ locked }) {
       velocity += (targetVelocity - velocity) * Math.min(ACCEL * dt, 1);
 
       if (Math.abs(velocity) > 0.5) {
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const next = Math.max(0, Math.min(maxScroll, window.scrollY + velocity * dt));
+        const next = Math.max(0, Math.min(cachedMaxScroll, window.scrollY + velocity * dt));
         window.scrollTo(0, next);
       }
 
@@ -80,6 +91,7 @@ export default function ConstantScroll({ locked }) {
     return () => {
       cancelAnimationFrame(rafId);
       clearTimeout(idleTimer);
+      window.removeEventListener("resize", updateMaxScroll);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("touchend", onTouchEnd);

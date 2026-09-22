@@ -17,6 +17,10 @@
 
 * {
   box-sizing: border-box;
+  /* Stops the browser from silently adjusting scroll position to
+     compensate for layout shifts — can otherwise fight ConstantScroll's
+     own controlled movement and look like a glitch mid-scroll. */
+  overflow-anchor: none;
 }
 
 html {
