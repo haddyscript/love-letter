@@ -29,39 +29,39 @@ export const timelineEvents = [
     label: "Month 1",
     date: "", // e.g. "October 2021"
     title: "The beginning of us.",
-    text: "Add a memory from where it all started.",
+    text: "This is where it all started — just the two of us, figuring things out.",
     photo: campsite01,
   },
   {
     id: "year-1",
-    label: "Year 1",
+    label: "A Memory",
     date: "", // photo is from Valentine's Day 2022
-    title: "One year in.",
-    text: "Add a memory from your first year together.",
+    title: "Our first Valentine's Day.",
+    text: "The first of many Valentine's spent right where I wanted to be — with you.",
     photo: valentinesDay2022,
   },
   {
     id: "year-2",
-    label: "Year 2",
+    label: "A Memory",
     date: "", // photo is from a Christmas party, Dec 2022
-    title: "Two years strong.",
-    text: "Add a memory from year two.",
+    title: "Christmas, together.",
+    text: "Another holiday, another memory made with you by my side.",
     photo: christmasParty2022,
   },
   {
     id: "year-3",
-    label: "Year 3",
+    label: "A Memory",
     date: "", // photo is from a graduation pictorial, Jan 2024
-    title: "Three years together.",
-    text: "Add a memory from year three.",
+    title: "Getting ready for graduation.",
+    text: "Dressed up, cameras out, and you still made me smile the most.",
     photo: graduationPictorial,
   },
   {
     id: "year-4",
-    label: "Year 4",
+    label: "A Memory",
     date: "", // photo is from USC graduation, together
-    title: "Four years and counting.",
-    text: "Add a memory from year four.",
+    title: "Graduating, side by side.",
+    text: "A big milestone, made so much better because you were there for it.",
     photo: uscGraduation,
   },
   {
@@ -69,7 +69,7 @@ export const timelineEvents = [
     label: "Month 59",
     date: "",
     title: "And we're still here.",
-    text: "Present day — still choosing each other, every day.",
+    text: "Present day — still laughing, still growing, still choosing each other.",
     photo: pnFinalParty,
   },
 ];
