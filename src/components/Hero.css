@@ -32,10 +32,12 @@
 
 .hero__word {
   display: inline-block;
+  margin-right: 0.22em;
 }
 
 .hero__heart {
   display: inline-block;
+  margin-left: 0.05em;
 }
 
 .hero__subtitle {
