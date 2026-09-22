@@ -17,7 +17,11 @@ export default function MusicPlayer() {
       player = new window.YT.Player("music-player-frame", {
         videoId: YOUTUBE_VIDEO_ID,
         playerVars: {
-          autoplay: 0,
+          // Muted autoplay is allowed by every browser without a user
+          // gesture, so the song is already playing under the splash —
+          // the first tap/click anywhere just unmutes it (see below).
+          autoplay: 1,
+          mute: 1,
           controls: 0,
           disablekb: 1,
           modestbranding: 1,
@@ -26,6 +30,9 @@ export default function MusicPlayer() {
           playlist: YOUTUBE_VIDEO_ID,
         },
         events: {
+          onReady: (e) => {
+            e.target.playVideo();
+          },
           onError: (e) => {
             console.warn("Background music unavailable (YouTube error code):", e.data);
           },
@@ -52,6 +59,8 @@ export default function MusicPlayer() {
     const startOnGesture = () => {
       if (startedRef.current || !playerRef.current) return;
       try {
+        playerRef.current.unMute();
+        playerRef.current.setVolume(100);
         playerRef.current.playVideo();
         startedRef.current = true;
       } catch {
