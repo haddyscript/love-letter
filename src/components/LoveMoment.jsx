@@ -112,16 +112,65 @@ export default function LoveMoment() {
                 : { duration: 0.6, ease: "backOut" }
             }
           >
+            <defs>
+              <radialGradient id="heartBase" cx="35%" cy="24%" r="85%">
+                <stop offset="0%" stopColor="#ffc3cf" />
+                <stop offset="45%" stopColor="#ff5c77" />
+                <stop offset="100%" stopColor="#c81f45" />
+              </radialGradient>
+              <linearGradient id="heartRim" x1="1" y1="1" x2="31" y2="28.5" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#fff0f3" stopOpacity="0.95" />
+                <stop offset="1" stopColor="#fff0f3" stopOpacity="0" />
+              </linearGradient>
+              <clipPath id="heartClip">
+                <path d="M16 28.5C16 28.5 1 19.2 1 9.2C1 4.1 5 1 9.1 1C12.3 1 14.8 3 16 5.6C17.2 3 19.7 1 22.9 1C27 1 31 4.1 31 9.2C31 19.2 16 28.5 16 28.5Z" />
+              </clipPath>
+            </defs>
+
             <path
               d="M16 28.5C16 28.5 1 19.2 1 9.2C1 4.1 5 1 9.1 1C12.3 1 14.8 3 16 5.6C17.2 3 19.7 1 22.9 1C27 1 31 4.1 31 9.2C31 19.2 16 28.5 16 28.5Z"
-              fill="url(#heartGradient)"
+              fill="url(#heartBase)"
             />
-            <defs>
-              <linearGradient id="heartGradient" x1="1" y1="1" x2="31" y2="28.5" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#ff8fa3" />
-                <stop offset="1" stopColor="#e8395a" />
-              </linearGradient>
-            </defs>
+            <path
+              d="M16 28.5C16 28.5 1 19.2 1 9.2C1 4.1 5 1 9.1 1C12.3 1 14.8 3 16 5.6C17.2 3 19.7 1 22.9 1C27 1 31 4.1 31 9.2C31 19.2 16 28.5 16 28.5Z"
+              fill="none"
+              stroke="url(#heartRim)"
+              strokeWidth="0.7"
+            />
+
+            <g clipPath="url(#heartClip)">
+              <ellipse
+                cx="10.5"
+                cy="8"
+                rx="6"
+                ry="3.6"
+                fill="#ffffff"
+                opacity="0.55"
+                transform="rotate(-25 10.5 8)"
+                style={{ filter: "blur(1.2px)" }}
+              />
+              {!shouldReduceMotion && (
+                <motion.rect
+                  x="-14"
+                  y="-4"
+                  width="7"
+                  height="38"
+                  fill="rgba(255,255,255,0.4)"
+                  transform="skewX(-18)"
+                  style={{ filter: "blur(0.6px)" }}
+                  animate={{ x: [-14, 40] }}
+                  transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 1.6, ease: "easeInOut" }}
+                />
+              )}
+            </g>
+
+            <motion.path
+              d="M23 3.3L23.6 5.1L25.4 5.8L23.6 6.5L23 8.3L22.4 6.5L20.6 5.8L22.4 5.1Z"
+              fill="#fff5f7"
+              animate={shouldReduceMotion ? { opacity: 0.85 } : { opacity: [0.25, 1, 0.25], scale: [0.75, 1, 0.75] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              style={{ transformOrigin: "23px 5.8px" }}
+            />
           </motion.svg>
         </motion.button>
 
