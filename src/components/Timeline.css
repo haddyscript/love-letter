@@ -67,8 +67,9 @@
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 18px;
-  padding: 1.4rem 1.5rem;
+  padding: 1.4rem 1.5rem 0;
   backdrop-filter: blur(6px);
+  overflow: hidden;
 }
 
 .timeline__label {
@@ -100,24 +101,25 @@
 }
 
 .timeline__photo-frame {
-  margin-top: 1rem;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
+  margin: 1.25rem -1.5rem 0;
+  width: calc(100% + 3rem);
+  aspect-ratio: 5 / 4;
   overflow: hidden;
+  perspective: 1200px;
 }
 
 .timeline__photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  backface-visibility: hidden;
   will-change: transform, opacity, filter;
 }
 
 .timeline__photo--placeholder {
-  margin-top: 1rem;
+  margin: 1.25rem 0 1.4rem;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 5 / 4;
   border-radius: 12px;
   display: flex;
   align-items: center;

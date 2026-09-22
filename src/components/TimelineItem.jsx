@@ -8,13 +8,15 @@ export default function TimelineItem({ event, index }) {
 
   const { scrollYProgress } = useScroll({
     target: photoRef,
-    offset: ["start 0.88", "start 0.35"],
+    offset: ["start 0.88", "start 0.3"],
   });
   const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.4 });
 
-  const scale = useTransform(progress, [0, 1], [1.18, 1]);
-  const imageOpacity = useTransform(progress, [0, 1], [0.35, 1]);
-  const y = useTransform(progress, [0, 1], [28, 0]);
+  const scale = useTransform(progress, [0, 1], [1.15, 1]);
+  const imageOpacity = useTransform(progress, [0, 1], [0.3, 1]);
+  const y = useTransform(progress, [0, 1], [36, 0]);
+  const rotateX = useTransform(progress, [0, 1], [24, 0]);
+  const rotateY = useTransform(progress, [0, 1], [side === "left" ? -18 : 18, 0]);
   const saturate = useTransform(progress, [0, 1], [0.4, 1]);
   const filter = useTransform(saturate, (v) => `saturate(${v})`);
 
@@ -44,7 +46,7 @@ export default function TimelineItem({ event, index }) {
               style={
                 shouldReduceMotion
                   ? undefined
-                  : { scale, opacity: imageOpacity, y, filter }
+                  : { scale, opacity: imageOpacity, y, rotateX, rotateY, filter }
               }
             />
           </div>
