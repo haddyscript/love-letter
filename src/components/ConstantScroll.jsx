@@ -4,8 +4,8 @@ import { useReducedMotion } from "framer-motion";
 // A hard, fast swipe and a light, gentle one both settle into this same
 // cruise speed, so pace stays calm and unhurried regardless of effort —
 // but still comfortable to actually scroll with, not sluggish.
-const CRUISE_SPEED = 520; // px/second
-const ACCEL = 4; // how quickly velocity eases toward the cruise speed
+const CRUISE_SPEED = 850; // px/second
+const ACCEL = 4.5; // how quickly velocity eases toward the cruise speed
 const IDLE_RESET_MS = 140; // gesture is considered "released" after this gap
 
 export default function ConstantScroll({ locked }) {
