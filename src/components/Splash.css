@@ -11,6 +11,13 @@
   cursor: pointer;
 }
 
+.splash__flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 214, 224, 0.9) 0%, rgba(255, 107, 129, 0.35) 35%, transparent 70%);
+  pointer-events: none;
+}
+
 .splash__ring {
   position: absolute;
   width: 90px;
@@ -24,6 +31,14 @@
   font-size: 2.6rem;
   color: var(--color-accent);
   filter: drop-shadow(0 0 22px rgba(255, 107, 129, 0.75));
+}
+
+.splash__burst-heart {
+  position: absolute;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 8px rgba(255, 107, 129, 0.7));
+  will-change: transform, opacity;
 }
 
 .splash__text {
