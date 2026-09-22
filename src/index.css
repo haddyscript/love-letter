@@ -27,9 +27,13 @@ html {
      its own overflow-x:hidden or horizontal swipe/scroll can still occur
      even with it set on body alone. */
   overflow-x: hidden;
-  /* Allow vertical pan/scroll only — blocks horizontal swipe gestures on
-     touch devices even when nothing is technically overflowing. */
-  touch-action: pan-y;
+  /* Fully hands touch gestures to JS (ConstantScroll) instead of letting
+     the browser handle vertical panning natively — pan-y would let native
+     scrolling proceed on the compositor thread regardless of JS
+     preventDefault(), which is exactly what ConstantScroll needs to
+     override to keep scroll speed effort-independent. Horizontal swipe
+     stays blocked as a side effect, same as before. */
+  touch-action: none;
   width: 100%;
 }
 
@@ -43,7 +47,7 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  touch-action: pan-y;
+  touch-action: none;
 }
 
 #root {
