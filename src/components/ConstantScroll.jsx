@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useReducedMotion } from "framer-motion";
 
-// Deliberately slow — a hard, fast swipe and a light, gentle one both
-// settle into this same cruise speed, so scroll pace stays calm and
-// unhurried (in step with the background music) regardless of effort.
-const CRUISE_SPEED = 260; // px/second
-const ACCEL = 3.2; // how quickly velocity eases toward the cruise speed
+// A hard, fast swipe and a light, gentle one both settle into this same
+// cruise speed, so pace stays calm and unhurried regardless of effort —
+// but still comfortable to actually scroll with, not sluggish.
+const CRUISE_SPEED = 520; // px/second
+const ACCEL = 4; // how quickly velocity eases toward the cruise speed
 const IDLE_RESET_MS = 140; // gesture is considered "released" after this gap
 
 export default function ConstantScroll({ locked }) {
