@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content";
 import { useLenis } from "./SmoothScroll";
+import { useMusic } from "./MusicPlayer";
 import "./Hero.css";
 
 const titleWords = hero.title.split(" ");
@@ -8,6 +9,7 @@ const titleWords = hero.title.split(" ");
 export default function Hero({ ready = true, onOpen }) {
   const shouldReduceMotion = useReducedMotion();
   const lenis = useLenis();
+  const music = useMusic();
 
   const handleOpen = () => {
     const target = document.getElementById("timeline");
@@ -20,6 +22,7 @@ export default function Hero({ ready = true, onOpen }) {
     document.body.style.overflow = "";
     document.body.style.touchAction = "";
     onOpen?.();
+    music?.play();
 
     if (!target) return;
     if (lenis) {

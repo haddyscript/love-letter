@@ -20,16 +20,17 @@ export default function App() {
     <SmoothScroll>
       <LenisLock locked={!storyOpen} />
       <Splash onDone={() => setIntroDone(true)} />
-      <MusicPlayer />
-      <FloatingParticles />
-      <div className="grain" aria-hidden="true" />
-      <div className="vignette" aria-hidden="true" />
-      <main>
-        <Hero ready={introDone} onOpen={() => setStoryOpen(true)} />
-        <Timeline />
-        <LoveMoment />
-        <FinalMessage />
-      </main>
+      <MusicPlayer>
+        <FloatingParticles />
+        <div className="grain" aria-hidden="true" />
+        <div className="vignette" aria-hidden="true" />
+        <main>
+          <Hero ready={introDone} onOpen={() => setStoryOpen(true)} />
+          <Timeline />
+          <LoveMoment />
+          <FinalMessage />
+        </main>
+      </MusicPlayer>
     </SmoothScroll>
   );
 }
