@@ -12,7 +12,6 @@ export default function Splash({ onDone }) {
       return undefined;
     }
 
-    document.body.style.overflow = "hidden";
     const timer = setTimeout(() => setVisible(false), 2100);
     return () => {
       clearTimeout(timer);
@@ -21,7 +20,6 @@ export default function Splash({ onDone }) {
   }, [shouldReduceMotion]);
 
   const handleExitComplete = () => {
-    document.body.style.overflow = "";
     onDone?.();
   };
 

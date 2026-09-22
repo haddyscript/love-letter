@@ -5,14 +5,25 @@ import "./Hero.css";
 
 const titleWords = hero.title.split(" ");
 
-export default function Hero({ ready = true }) {
+export default function Hero({ ready = true, onOpen }) {
   const shouldReduceMotion = useReducedMotion();
   const lenis = useLenis();
 
   const handleOpen = () => {
     const target = document.getElementById("timeline");
+
+    // Unlock scroll immediately (synchronously) rather than waiting on the
+    // parent's state update, so the animated scroll below isn't blocked by
+    // the still-applied `overflow: hidden` from the pre-click scroll lock.
+    document.documentElement.style.overflow = "";
+    document.documentElement.style.touchAction = "";
+    document.body.style.overflow = "";
+    document.body.style.touchAction = "";
+    onOpen?.();
+
     if (!target) return;
     if (lenis) {
+      lenis.start();
       lenis.scrollTo(target, { duration: 1.4 });
     } else {
       target.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
@@ -80,16 +91,6 @@ export default function Hero({ ready = true }) {
           {hero.cta}
         </motion.button>
       </div>
-
-      <motion.div
-        className="hero__scroll-hint"
-        initial={{ opacity: 0 }}
-        animate={ready ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 1, delay: 2 }}
-        aria-hidden="true"
-      >
-        <span className="hero__scroll-line" />
-      </motion.div>
     </section>
   );
 }
