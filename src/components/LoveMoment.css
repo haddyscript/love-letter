@@ -96,11 +96,27 @@
   color: var(--color-accent-soft);
 }
 
+.love__line-wrap {
+  position: relative;
+}
+
+.love__line-glow {
+  position: absolute;
+  inset: -60% -15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 129, 0.35) 0%, rgba(255, 107, 129, 0) 70%);
+  filter: blur(6px);
+  z-index: -1;
+}
+
 .love__bloom {
+  position: relative;
   width: 130px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(255, 107, 129, 0.25);
+  perspective: 800px;
+  transform-style: preserve-3d;
 }
 
 .love__bloom-video {
@@ -108,6 +124,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  backface-visibility: hidden;
+}
+
+.love__bloom-shine {
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.45) 50%, transparent 100%);
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

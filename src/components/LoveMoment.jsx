@@ -99,8 +99,18 @@ export default function LoveMoment() {
           <motion.svg
             className="love__heart-svg"
             viewBox="0 0 32 29"
-            animate={revealed ? { scale: 1.35 } : { scale: 1 }}
-            transition={{ duration: 0.6, ease: "backOut" }}
+            animate={
+              shouldReduceMotion
+                ? { scale: revealed ? 1.35 : 1 }
+                : revealed
+                ? { scale: [1.35, 1.44, 1.35] }
+                : { scale: 1 }
+            }
+            transition={
+              revealed
+                ? { duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
+                : { duration: 0.6, ease: "backOut" }
+            }
           >
             <path
               d="M16 28.5C16 28.5 1 19.2 1 9.2C1 4.1 5 1 9.1 1C12.3 1 14.8 3 16 5.6C17.2 3 19.7 1 22.9 1C27 1 31 4.1 31 9.2C31 19.2 16 28.5 16 28.5Z"
@@ -118,17 +128,34 @@ export default function LoveMoment() {
         <div className="love__lines" role="status">
           <AnimatePresence>
             {revealed &&
-              loveMoment.lines.map((line, i) => (
-                <motion.p
-                  key={line}
-                  className={`love__line ${i === loveMoment.lines.length - 1 ? "love__line--last" : ""}`}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: shouldReduceMotion ? 0 : 0.5 + i * 0.9, ease: "easeOut" }}
-                >
-                  {line}
-                </motion.p>
-              ))}
+              loveMoment.lines.map((line, i) => {
+                const isLast = i === loveMoment.lines.length - 1;
+                const initial = shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: 22, filter: "blur(7px)" };
+                const animate = shouldReduceMotion
+                  ? { opacity: 1 }
+                  : { opacity: 1, y: 0, filter: "blur(0px)" };
+                return (
+                  <motion.div
+                    key={line}
+                    className={isLast ? "love__line-wrap" : undefined}
+                    initial={initial}
+                    animate={animate}
+                    transition={{ duration: 0.9, delay: shouldReduceMotion ? 0 : 0.5 + i * 0.9, ease: "easeOut" }}
+                  >
+                    {isLast && (
+                      <motion.span
+                        className="love__line-glow"
+                        aria-hidden="true"
+                        animate={shouldReduceMotion ? {} : { opacity: [0.4, 0.85, 0.4], scale: [0.9, 1.08, 0.9] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.3 }}
+                      />
+                    )}
+                    <p className={`love__line ${isLast ? "love__line--last" : ""}`}>{line}</p>
+                  </motion.div>
+                );
+              })}
           </AnimatePresence>
         </div>
 
@@ -136,9 +163,17 @@ export default function LoveMoment() {
           {revealed && (
             <motion.div
               className="love__bloom"
-              initial={{ opacity: 0, scale: 0.85, y: 14 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: shouldReduceMotion ? 0 : 2.7, ease: "easeOut" }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, scale: 0.8, y: 20, rotateX: 30 }
+              }
+              animate={
+                shouldReduceMotion
+                  ? { opacity: 1 }
+                  : { opacity: 1, scale: 1, y: 0, rotateX: 0 }
+              }
+              transition={{ duration: 1, delay: shouldReduceMotion ? 0 : 2.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <video
                 className="love__bloom-video"
@@ -149,6 +184,15 @@ export default function LoveMoment() {
                 playsInline
                 aria-hidden="true"
               />
+              {!shouldReduceMotion && (
+                <motion.span
+                  className="love__bloom-shine"
+                  aria-hidden="true"
+                  initial={{ x: "-120%" }}
+                  animate={{ x: "220%" }}
+                  transition={{ duration: 1.1, delay: 3.3, ease: "easeInOut" }}
+                />
+              )}
             </motion.div>
           )}
         </AnimatePresence>
