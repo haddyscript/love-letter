@@ -32,6 +32,14 @@ export default function Hero({ ready = true, onOpen }) {
     onOpen?.();
     music?.play();
 
+    // Every scroll-linked animation mounted before this click (e.g.
+    // FinalMessage's useScroll) measured the document while it was still
+    // artificially shrunk to viewport height by the lock above, and caches
+    // that measurement — a resize event is the standard nudge these
+    // libraries listen for to remeasure against the now-correct, full
+    // document height.
+    window.dispatchEvent(new Event("resize"));
+
     if (!target) return;
     if (lenis) {
       lenis.start();

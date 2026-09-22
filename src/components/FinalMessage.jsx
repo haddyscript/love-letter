@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { finalMessage } from "../data/content";
 import "./FinalMessage.css";
@@ -13,23 +12,31 @@ function useBlockStyle(progress, range) {
 
 export default function FinalMessage() {
   const shouldReduceMotion = useReducedMotion();
-  const sectionRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({ target: sectionRef });
+  // Tracks the whole page's scroll position (scrollY / maxScrollY) instead
+  // of this section's own on-screen position. As the last section on the
+  // page, position-based tracking has no margin for error — any stale
+  // measurement (e.g. from mounting while the pre-click scroll lock had
+  // temporarily shrunk the document) leaves it permanently stuck. Global
+  // scroll fraction is simple and self-correcting: it's always current.
+  const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
 
-  const countdown = useBlockStyle(progress, [0.05, 0.25]);
-  const heading = useBlockStyle(progress, [0.15, 0.35]);
-  const body = useBlockStyle(progress, [0.25, 0.45]);
-  const closing = useBlockStyle(progress, [0.38, 0.58]);
-  const signature = useBlockStyle(progress, [0.5, 0.7]);
+  // Compressed well below 1 with a comfortable margin — the achievable
+  // maximum for the page's overall scroll fraction varies by device/
+  // content height and doesn't reliably reach exactly 1.0 in practice.
+  const countdown = useBlockStyle(progress, [0.5, 0.58]);
+  const heading = useBlockStyle(progress, [0.56, 0.64]);
+  const body = useBlockStyle(progress, [0.62, 0.7]);
+  const closing = useBlockStyle(progress, [0.68, 0.76]);
+  const signature = useBlockStyle(progress, [0.74, 0.82]);
 
-  const closingGlowOpacity = useTransform(progress, [0.38, 0.58], [0, 1]);
+  const closingGlowOpacity = useTransform(progress, [0.68, 0.76], [0, 1]);
 
   const style = (block) => (shouldReduceMotion ? undefined : block);
 
   return (
-    <section className="final section" id="final" ref={sectionRef}>
+    <section className="final section" id="final">
       <div className="final__glow" aria-hidden="true" />
       <div className="section__inner final__inner">
         <motion.div className="final__countdown" style={style(countdown)}>
