@@ -69,7 +69,7 @@ export const timelineEvents = [
     label: "Month 59",
     date: "",
     title: "And we're still here.",
-    text: "Present day — still laughing, still growing, still choosing each other.",
+    text: "Still laughing, still growing, still choosing each other, every day.",
     photo: pnFinalParty,
   },
 ];
