@@ -12,11 +12,17 @@ export const hero = {
   cta: "Open our story →",
 };
 
-// To add a photo to a timeline entry, drop the image file in
-// `src/assets/photos/` and set `photo` to the imported path, e.g.
-//   import month1 from "../assets/photos/month-1.jpg";
-//   ...
-//   { ...  photo: month1 }
+// To change a photo, drop the image file in `src/assets/photos/`,
+// import it below, and set it as the `photo` for that entry.
+// The photos below were auto-matched to slots by filename/EXIF date —
+// double check the order is actually correct and swap freely.
+import campsite01 from "../assets/photos/campsite-01.jpeg";
+import valentinesDay2022 from "../assets/photos/valentines-day-2022.jpeg";
+import christmasParty2022 from "../assets/photos/christmas-party-2022.jpeg";
+import graduationPictorial from "../assets/photos/graduation-pictorial.jpeg";
+import uscGraduation from "../assets/photos/usc-graduation-together.jpeg";
+import pnFinalParty from "../assets/photos/pn-final-party.jpeg";
+
 export const timelineEvents = [
   {
     id: "month-1",
@@ -24,39 +30,39 @@ export const timelineEvents = [
     date: "", // e.g. "October 2021"
     title: "The beginning of us.",
     text: "Add a memory from where it all started.",
-    photo: null,
+    photo: campsite01,
   },
   {
     id: "year-1",
     label: "Year 1",
-    date: "",
+    date: "", // photo is from Valentine's Day 2022
     title: "One year in.",
     text: "Add a memory from your first year together.",
-    photo: null,
+    photo: valentinesDay2022,
   },
   {
     id: "year-2",
     label: "Year 2",
-    date: "",
+    date: "", // photo is from a Christmas party, Dec 2022
     title: "Two years strong.",
     text: "Add a memory from year two.",
-    photo: null,
+    photo: christmasParty2022,
   },
   {
     id: "year-3",
     label: "Year 3",
-    date: "",
+    date: "", // photo is from a graduation pictorial, Jan 2024
     title: "Three years together.",
     text: "Add a memory from year three.",
-    photo: null,
+    photo: graduationPictorial,
   },
   {
     id: "year-4",
     label: "Year 4",
-    date: "",
+    date: "", // photo is from USC graduation, together
     title: "Four years and counting.",
     text: "Add a memory from year four.",
-    photo: null,
+    photo: uscGraduation,
   },
   {
     id: "month-59",
@@ -64,7 +70,7 @@ export const timelineEvents = [
     date: "",
     title: "And we're still here.",
     text: "Present day — still choosing each other, every day.",
-    photo: null,
+    photo: pnFinalParty,
   },
 ];
 

@@ -20,13 +20,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  /* Lenis drives smooth scrolling in JS; CSS scroll-behavior stays "auto"
+     so the two don't fight over the same scroll animation. */
+  scroll-behavior: auto;
 }
 
 body {

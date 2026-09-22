@@ -1,16 +1,22 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content";
+import { useLenis } from "./SmoothScroll";
 import "./Hero.css";
 
 const titleWords = hero.title.split(" ");
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
+  const lenis = useLenis();
 
   const handleOpen = () => {
-    document.getElementById("timeline")?.scrollIntoView({
-      behavior: shouldReduceMotion ? "auto" : "smooth",
-    });
+    const target = document.getElementById("timeline");
+    if (!target) return;
+    if (lenis) {
+      lenis.scrollTo(target, { duration: 1.4 });
+    } else {
+      target.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
+    }
   };
 
   return (
