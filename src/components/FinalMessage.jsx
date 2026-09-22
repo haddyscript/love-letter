@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { finalMessage } from "../data/content";
+import roseAccent from "../assets/photos/flower-photo.jpg";
 import "./FinalMessage.css";
 
 function useBlockStyle(progress, range) {
@@ -38,6 +39,7 @@ export default function FinalMessage() {
   return (
     <section className="final section" id="final">
       <div className="final__glow" aria-hidden="true" />
+      <img className="final__rose" src={roseAccent} alt="" aria-hidden="true" />
       <div className="section__inner final__inner">
         <motion.div className="final__countdown" style={style(countdown)}>
           {finalMessage.countdown.map((line) => (

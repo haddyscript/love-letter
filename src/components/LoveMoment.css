@@ -96,6 +96,20 @@
   color: var(--color-accent-soft);
 }
 
+.love__bloom {
+  width: 130px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 107, 129, 0.25);
+}
+
+.love__bloom-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .love__heart-glow {
     animation: none;

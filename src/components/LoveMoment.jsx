@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { loveMoment } from "../data/content";
+import flowerBloom from "../assets/photos/flower-bloom.mp4";
 import "./LoveMoment.css";
 
 const BURST_COUNT = 10;
@@ -130,6 +131,27 @@ export default function LoveMoment() {
               ))}
           </AnimatePresence>
         </div>
+
+        <AnimatePresence>
+          {revealed && (
+            <motion.div
+              className="love__bloom"
+              initial={{ opacity: 0, scale: 0.85, y: 14 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: shouldReduceMotion ? 0 : 2.7, ease: "easeOut" }}
+            >
+              <video
+                className="love__bloom-video"
+                src={flowerBloom}
+                autoPlay={!shouldReduceMotion}
+                loop={!shouldReduceMotion}
+                muted
+                playsInline
+                aria-hidden="true"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
