@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { loveMoment } from "../data/content";
 import "./LoveMoment.css";
 
+const BURST_COUNT = 10;
+
+function makeBurst() {
+  return Array.from({ length: BURST_COUNT }, (_, i) => {
+    const angle = (360 / BURST_COUNT) * i + (Math.random() * 16 - 8);
+    const distance = 46 + Math.random() * 34;
+    const rad = (angle * Math.PI) / 180;
+    return {
+      id: i,
+      tx: Math.cos(rad) * distance,
+      ty: Math.sin(rad) * distance,
+      size: 0.45 + Math.random() * 0.45,
+      delay: Math.random() * 0.06,
+    };
+  });
+}
+
 export default function LoveMoment() {
   const [revealed, setRevealed] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const burst = useMemo(() => makeBurst(), []);
 
   return (
     <section className="love section" id="love">
@@ -41,9 +59,42 @@ export default function LoveMoment() {
               ? { duration: 0.6, ease: "backOut" }
               : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }
           }
-          whileTap={{ scale: 0.9 }}
+          whileTap={{ scale: 0.88 }}
         >
           <span className="love__heart-glow" aria-hidden="true" />
+
+          {!revealed && !shouldReduceMotion && (
+            <>
+              <motion.span
+                className="love__ripple"
+                aria-hidden="true"
+                animate={{ scale: [1, 2.3], opacity: [0.55, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+              />
+              <motion.span
+                className="love__ripple"
+                aria-hidden="true"
+                animate={{ scale: [1, 2.3], opacity: [0.55, 0] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 1.1 }}
+              />
+            </>
+          )}
+
+          {revealed &&
+            !shouldReduceMotion &&
+            burst.map((h) => (
+              <motion.span
+                key={h.id}
+                className="love__burst-heart"
+                aria-hidden="true"
+                initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
+                animate={{ x: h.tx, y: h.ty, scale: h.size, opacity: 0 }}
+                transition={{ duration: 0.7, delay: h.delay, ease: [0.16, 1, 0.3, 1] }}
+              >
+                ❤
+              </motion.span>
+            ))}
+
           <motion.svg
             className="love__heart-svg"
             viewBox="0 0 32 29"

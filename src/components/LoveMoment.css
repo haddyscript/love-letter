@@ -58,6 +58,23 @@
   filter: drop-shadow(0 0 18px rgba(232, 57, 90, 0.65));
 }
 
+.love__ripple {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 143, 163, 0.6);
+  pointer-events: none;
+}
+
+.love__burst-heart {
+  position: absolute;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 6px rgba(255, 107, 129, 0.7));
+  pointer-events: none;
+}
+
 .love__lines {
   display: flex;
   flex-direction: column;
