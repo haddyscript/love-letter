@@ -19,10 +19,7 @@ export default function SmoothScroll({ children }) {
       duration: 1.1,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      // Touch input is handled entirely by ConstantScroll instead (fixed,
-      // effort-independent cruise speed) — zeroing this out stops Lenis
-      // from also reacting to raw touch deltas and fighting it.
-      touchMultiplier: 0,
+      touchMultiplier: 1.2,
     });
 
     lenisRef.current = instance;

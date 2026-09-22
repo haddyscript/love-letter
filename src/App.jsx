@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SmoothScroll from "./components/SmoothScroll";
 import LenisLock from "./components/LenisLock";
-import ConstantScroll from "./components/ConstantScroll";
 import Splash from "./components/Splash";
 import MusicPlayer from "./components/MusicPlayer";
 import FloatingParticles from "./components/FloatingParticles";
@@ -20,7 +19,6 @@ export default function App() {
   return (
     <SmoothScroll>
       <LenisLock locked={!storyOpen} />
-      <ConstantScroll locked={!storyOpen} />
       <Splash onDone={() => setIntroDone(true)} />
       <MusicPlayer>
         <FloatingParticles />
