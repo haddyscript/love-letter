@@ -2,9 +2,40 @@ import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content";
 import { useLenis } from "./SmoothScroll";
 import { useMusic } from "./MusicPlayer";
+import CountUp from "./CountUp";
 import "./Hero.css";
 
 const titleWords = hero.title.split(" ");
+
+// Update this alongside the "59" mentioned elsewhere on the site (title,
+// final countdown) if the number of months changes.
+const MONTHS = 59;
+const DAYS = Math.round(MONTHS * 30.44);
+const HOURS = DAYS * 24;
+
+const stats = [
+  { label: "Hours", value: HOURS },
+  { label: "Days", value: DAYS },
+  { label: "Months", value: MONTHS },
+];
+
+function splitLeadingNumber(word) {
+  const match = word.match(/^(\d+)(.*)$/);
+  if (!match) return null;
+  return { number: parseInt(match[1], 10), suffix: match[2] };
+}
+
+function splitNumber(text) {
+  const match = text.match(/\d+/);
+  if (!match) return null;
+  return {
+    before: text.slice(0, match.index),
+    number: parseInt(match[0], 10),
+    after: text.slice(match.index + match[0].length),
+  };
+}
+
+const subtitleParts = splitNumber(hero.subtitle);
 
 export default function Hero({ ready = true, onOpen }) {
   const shouldReduceMotion = useReducedMotion();
@@ -73,17 +104,27 @@ export default function Hero({ ready = true, onOpen }) {
         </motion.p>
 
         <h1 className="hero__title glow-text">
-          {titleWords.map((word, i) => (
-            <motion.span
-              key={word + i}
-              className="hero__word"
-              initial={{ opacity: 0, y: 24 }}
-              animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-              transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {word}
-            </motion.span>
-          ))}
+          {titleWords.map((word, i) => {
+            const numeric = splitLeadingNumber(word);
+            return (
+              <motion.span
+                key={word + i}
+                className="hero__word"
+                initial={{ opacity: 0, y: 24 }}
+                animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {numeric ? (
+                  <>
+                    <CountUp to={numeric.number} start={ready} duration={2.6} delay={0.35} />
+                    {numeric.suffix}
+                  </>
+                ) : (
+                  word
+                )}
+              </motion.span>
+            );
+          })}
           <motion.span
             className="hero__heart"
             initial={{ opacity: 0, scale: 0.4 }}
@@ -100,8 +141,32 @@ export default function Hero({ ready = true, onOpen }) {
           animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           transition={{ duration: 0.9, delay: 1.2 }}
         >
-          {hero.subtitle}
+          {subtitleParts ? (
+            <>
+              {subtitleParts.before}
+              <CountUp to={subtitleParts.number} start={ready} duration={2} delay={1.7} />
+              {subtitleParts.after}
+            </>
+          ) : (
+            hero.subtitle
+          )}
         </motion.p>
+
+        <motion.div
+          className="hero__stats"
+          initial={{ opacity: 0, y: 16 }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.9, delay: 1.7 }}
+        >
+          {stats.map((stat, i) => (
+            <div className="hero__stat" key={stat.label}>
+              <span className="hero__stat-value">
+                <CountUp to={stat.value} start={ready} duration={3.2} delay={2 + i * 0.25} />
+              </span>
+              <span className="hero__stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
 
         <motion.button
           type="button"
@@ -109,7 +174,7 @@ export default function Hero({ ready = true, onOpen }) {
           onClick={handleOpen}
           initial={{ opacity: 0, y: 16 }}
           animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.9, delay: 1.5 }}
+          transition={{ duration: 0.9, delay: 2.3 }}
           whileTap={{ scale: 0.96 }}
         >
           {hero.cta}
