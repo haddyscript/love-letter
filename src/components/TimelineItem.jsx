@@ -15,7 +15,7 @@ export default function TimelineItem({ event, index }) {
       <span className="timeline__dot" aria-hidden="true" />
 
       <div className="timeline__card">
-        <span className="timeline__label">{event.label}</span>
+        {event.label && <span className="timeline__label">{event.label}</span>}
         {event.date && <span className="timeline__date">{event.date}</span>}
         <h3 className="timeline__title">{event.title}</h3>
         <p className="timeline__text">{event.text}</p>

@@ -26,7 +26,7 @@ import pnFinalParty from "../assets/photos/pn-final-party.jpeg";
 export const timelineEvents = [
   {
     id: "month-1",
-    label: "Month 1",
+    label: "",
     date: "", // e.g. "October 2021"
     title: "The beginning of us.",
     text: "This is where it all started — just the two of us, figuring things out.",
