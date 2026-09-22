@@ -16,17 +16,30 @@ export default function Hero({ ready = true, onOpen }) {
 
     // Unlock scroll immediately (synchronously) rather than waiting on the
     // parent's state update, so the animated scroll below isn't blocked by
-    // the still-applied `overflow: hidden` from the pre-click scroll lock.
+    // the still-applied lock styles. The lock pins <body> with
+    // position:fixed + a negative top offset (the iOS-reliable technique),
+    // so undoing it means restoring scroll to that offset before clearing
+    // the fixed positioning, or the page would jump to the top first.
+    const lockedOffset = -(parseInt(document.body.style.top || "0", 10) || 0);
     document.documentElement.style.overflow = "";
     document.documentElement.style.touchAction = "";
     document.body.style.overflow = "";
     document.body.style.touchAction = "";
+    document.body.style.position = "";
+    document.body.style.width = "";
+    document.body.style.top = "";
+    window.scrollTo(0, lockedOffset);
     onOpen?.();
     music?.play();
 
     if (!target) return;
     if (lenis) {
       lenis.start();
+      // The lock temporarily shrinks the document to viewport height
+      // (position:fixed body), so Lenis's cached scroll limit is now
+      // stale — force it to remeasure before animating, or the target
+      // offset gets clamped to the old (too-small) limit.
+      lenis.resize();
       lenis.scrollTo(target, { duration: 1.4 });
     } else {
       target.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
