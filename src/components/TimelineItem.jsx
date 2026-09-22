@@ -1,8 +1,22 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export default function TimelineItem({ event, index }) {
   const shouldReduceMotion = useReducedMotion();
   const side = index % 2 === 0 ? "left" : "right";
+  const photoRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: photoRef,
+    offset: ["start 0.88", "start 0.35"],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 100, damping: 24, mass: 0.4 });
+
+  const scale = useTransform(progress, [0, 1], [1.18, 1]);
+  const imageOpacity = useTransform(progress, [0, 1], [0.35, 1]);
+  const y = useTransform(progress, [0, 1], [28, 0]);
+  const saturate = useTransform(progress, [0, 1], [0.4, 1]);
+  const filter = useTransform(saturate, (v) => `saturate(${v})`);
 
   return (
     <motion.li
@@ -21,9 +35,21 @@ export default function TimelineItem({ event, index }) {
         <p className="timeline__text">{event.text}</p>
 
         {event.photo ? (
-          <img className="timeline__photo" src={event.photo} alt={event.title} loading="lazy" />
+          <div className="timeline__photo-frame" ref={photoRef}>
+            <motion.img
+              className="timeline__photo"
+              src={event.photo}
+              alt={event.title}
+              loading="lazy"
+              style={
+                shouldReduceMotion
+                  ? undefined
+                  : { scale, opacity: imageOpacity, y, filter }
+              }
+            />
+          </div>
         ) : (
-          <div className="timeline__photo timeline__photo--placeholder" aria-hidden="true">
+          <div className="timeline__photo timeline__photo--placeholder" aria-hidden="true" ref={photoRef}>
             <span>♥</span>
           </div>
         )}
